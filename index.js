@@ -1,14 +1,14 @@
-const { login, getToken, getUserAccounts, populateAccounts } = require('./helpers');
+const { getRefreshToken, getAccessToken, getAccounts, populateAccounts } = require('./helpers');
 
 (async () => {
 	try {
-		const refreshToken = await login();
-		const token = await getToken(refreshToken);
-		const accounts = await getUserAccounts(token);
+		const refreshToken = await getRefreshToken();
+		const accessToken = await getAccessToken(refreshToken);
+		const accounts = await getAccounts(accessToken);
 		
-		const parsedAccounts = await populateAccounts(token, accounts);
+		const parsedAccounts = await populateAccounts(accessToken, accounts);
 		
-		console.log(JSON.stringify(parsedAccounts, null, 4));
+		console.info(JSON.stringify(parsedAccounts, null, 4));
 	} catch (err) {
 		if (err.name === 'StatusCodeError') {
 			console.error(`${err.statusCode} on ${err.options.url}`);
