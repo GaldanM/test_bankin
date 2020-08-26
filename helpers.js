@@ -65,7 +65,11 @@ module.exports = {
 			return {
 				acc_number: account.acc_number,
 				amount: account.amount,
-				transactions,
+				transactions: transactions.map(t => ({
+					label: t.label,
+					amount: t.amount,
+					currency: t.currency,
+				})),
 			};
 		}
 		
